@@ -89,31 +89,25 @@ public String buyProdect(String userId,String productid,String merchantID ) {
 
 //************** extra endpoint *****************
 
-    //3 of 5 extra endpoint
-    // ميثود لحساب الخصم على المنتج
-    public double applyDiscount( String pID ,double discountPercentage){
-        ProductModel product = getProductById(pID);
-        if (product != null) {
-            double discountedPrice = product.getPrice()
-                    - (product.getPrice() * discountPercentage / 100);
-            product.setPrice(discountedPrice);
-            return discountedPrice;
-        }
-        return -1;
+      //1 of 5 extra end point
+// to use it in stock service
+    // حساب السعر بعد الخصم
+    public double calculateDiscountedPrice(double originalPrice, double discountPercentage) {
+        return originalPrice - (originalPrice * discountPercentage / 100);
     }
 
 
-    // 5 of 5 extra endpoint
-    //احدث السعر
-    public boolean updateProductPrice(String productId, double newPrice) {
-        for (ProductModel product : list) {
-            if (product.getPID().equals(productId)) {
-                product.setPrice(newPrice);
-                return true;
-            }
-        }
-        return false;
-    }
+
+
+
+
+
+
+
+
+
+
+    
     //************** extra credit*****************
     //  1 of 3 extra credit
     // المنتجات الاكثر مبيعا مبيعا
