@@ -75,34 +75,51 @@ public class StockController {
         if (added) {
             return ResponseEntity.status(200).body(new Api("Stock updated successfully"));
         }
-        return ResponseEntity.status(404).body(new Api("Stock or merchant not found"));
+        return ResponseEntity.status(400).body(new Api("Stock or merchant not found"));
     }
 
 
+    //1 of 5 extra end point
+    @PutMapping("/apply-discount/{merchantID}/{productID}/{discountPercentage}")
+    public ResponseEntity applyDiscount(
+            @PathVariable String merchantID,
+            @PathVariable String productID,
+            @PathVariable double discountPercentage) {
 
-    // 4 of 5 extra end point
-// ميثود لتحديث المخزون لجميع المنتجات
-    @PutMapping("/update-all-stocks/{Increase}")
-    public ResponseEntity updateAllStocks(@PathVariable int Increase) {
-        String result = stockService.updateStockForAllProducts(Increase);
+        double discountedPrice = stockService.applyDiscount(merchantID, productID,
+                discountPercentage);
 
-        if (result.equals("Stock updated successfully for all products.")) {
-            return ResponseEntity.status(200).body(new Api(result));
-        } else {
-            return ResponseEntity.status(400).body(new Api(result));
+        if (discountedPrice == -1) {
+            return ResponseEntity.status(400).body("Invalid request: Merchant or Product not found" +
+                    ", or unauthorized.");
         }
-    }
 
+        return ResponseEntity.ok("Discount applied successfully! New Price: " + discountedPrice);
+    }
+}
+
+    
+
+
+
+
+
+
+
+
+
+
+    
 //*************** extra credit********************
-    //3 of 3 extra credit
-@GetMapping("/low-stock")
-public ResponseEntity getLowStockProducts(@RequestParam int threshold) {
-    ArrayList<StockModel> lowStock= stockService.getLowStockProducts(threshold);
-    if (lowStock==null) {
-        return ResponseEntity.status(400).body(new Api("No  products found"));
-    }
-    return ResponseEntity.status(200).body(lowStock);
-}
+//     //3 of 3 extra credit
+// @GetMapping("/low-stock")
+// public ResponseEntity getLowStockProducts(@RequestParam int threshold) {
+//     ArrayList<StockModel> lowStock= stockService.getLowStockProducts(threshold);
+//     if (lowStock==null) {
+//         return ResponseEntity.status(400).body(new Api("No  products found"));
+//     }
+//     return ResponseEntity.status(200).body(lowStock);
+// }
 
-}
+// }
 
