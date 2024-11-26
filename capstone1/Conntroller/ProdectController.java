@@ -55,7 +55,7 @@ if (cheecked){
 
 
     //delete
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable String id){
         boolean checed=prodectService.delete(id);
         if (checed){
@@ -79,55 +79,37 @@ if (cheecked){
         }
     }
 
-    // 3 of 5 extera endpoint
-    @PostMapping("/apply-discount/{productId}/{discountPercentage}")
-    public ResponseEntity applyDiscount(@PathVariable String productId,
-                                        @PathVariable double discountPercentage) {
-        double discountedPrice = prodectService.applyDiscount(productId, discountPercentage);  // استدعاء الميثود من ProductService
-
-        if (discountedPrice != -1) {
-            return ResponseEntity.status(200).body(new Api("Discount applied successfully," +
-                    " new price: " + discountedPrice));
-        }
-        return ResponseEntity.status(400).body(new Api("Product not found"));
-    }
+   
 
 
-    //5 of 5  extra endpoint
-// احدث السعر
-    @PutMapping("/update-price/{pID}/{newPrice}")
-    public ResponseEntity updateProductPrice(@PathVariable String pID,
-                                             @PathVariable double newPrice) {
-        boolean updated = prodectService.updateProductPrice(pID, newPrice);
-        if (updated) {
-            return ResponseEntity.status(200).body(new Api("Price updated successfully"));
-        }
-        return ResponseEntity.status(400).body(new Api("Product not found"));
-    }
+
+
+    
+   
 
     //************** extra credit*****************
 
-    //  1 of 3 extra credit
-    @GetMapping("/top-products")
-    public ResponseEntity getTopProducts() {
-        ArrayList<ProductModel> topProducts = prodectService.getTopProducts();
-        if (topProducts == null) {
-            return ResponseEntity.status(400).body(new Api("There is no top selling found"));
-        }
-        return ResponseEntity.status(200).body(topProducts);
-    }
+    // //  1 of 3 extra credit
+    // @GetMapping("/top-products")
+    // public ResponseEntity getTopProducts() {
+    //     ArrayList<ProductModel> topProducts = prodectService.getTopProducts();
+    //     if (topProducts == null) {
+    //         return ResponseEntity.status(400).body(new Api("There is no top selling found"));
+    //     }
+    //     return ResponseEntity.status(200).body(topProducts);
+    // }
 
 
-    // 2 of 3 extera credit
-    @PostMapping("/rate-product/{productId}/{rating}")
-    public ResponseEntity rateProduct(@PathVariable String productId, @PathVariable int rating) {
-        boolean success = prodectService.addRating(productId, rating);
+    // // 2 of 3 extera credit
+    // @PostMapping("/rate-product/{productId}/{rating}")
+    // public ResponseEntity rateProduct(@PathVariable String productId, @PathVariable int rating) {
+    //     boolean success = prodectService.addRating(productId, rating);
 
-        if (success) {
-            return ResponseEntity.status(200).body(new Api("Product rated successfully"));
-        }
-        return ResponseEntity.status(400).body(new Api("Invalid rating or product not found"));
-    }
+    //     if (success) {
+    //         return ResponseEntity.status(200).body(new Api("Product rated successfully"));
+    //     }
+    //     return ResponseEntity.status(400).body(new Api("Invalid rating or product not found"));
+    // }
 
 
 
