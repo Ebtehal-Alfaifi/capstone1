@@ -64,46 +64,33 @@ public StockModel getStockByProductAndMerchant (String merchantID,String product
     return null;
     }
 
-    //************** extra endpoint *****************
 
-// 4 of 5 extraend point
-//احدث المخزون بعد الاضافة
-    // تحديث المخزون لجميع المنتجات في النظام بمقدار ثابت يعني مو لمنتج مححدد
-    //مثل إذا تم إرسال شحنة جديدة تحتوي على نفس الكمية من المنتجات لكل صنف
-// ،زيادة المخزون لكل منتج
 
-public String updateStockForAllProducts(int stockIncrease) {
-    if (stockIncrease <= 0) {
-        return "Stock increase must be a positive ";
-    }
-    if (list.isEmpty()) {
-        return "No products available to update.";
-    }
 
-    for (StockModel stock : list) {
-        stock.setStock(stock.getStock() + stockIncrease);
-    }
 
-    return "Stock updated successfully for all products.";
-}
+   
 
+
+
+
+    
     //************  extra credit ***************
     //3 of 3 extra credit
-    // يساعد التاجر انه يعرف المخزون الي قربت تنفذ كميته
-    public ArrayList<StockModel> getLowStockProducts(int number) {
-        ArrayList<StockModel> lowStockList = new ArrayList<>();
-        for (StockModel stock : list) {
-            if (stock.getStock() < number) {
-                lowStockList.add(stock);
-            }
-        }
-       if (lowStockList.isEmpty()){
-           return null;
-       }
-       else {
-           return lowStockList;
-       }
-    }
+    // // يساعد التاجر انه يعرف المخزون الي قربت تنفذ كميته
+    // public ArrayList<StockModel> getLowStockProducts(int number) {
+    //     ArrayList<StockModel> lowStockList = new ArrayList<>();
+    //     for (StockModel stock : list) {
+    //         if (stock.getStock() < number) {
+    //             lowStockList.add(stock);
+    //         }
+    //     }
+    //    if (lowStockList.isEmpty()){
+    //        return null;
+    //    }
+    //    else {
+    //        return lowStockList;
+    //    }
+    // }
 
 }
 
