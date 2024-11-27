@@ -77,6 +77,20 @@ if (cheecked){
         } else {
             return ResponseEntity.status(400).body(result);
         }
+
+          @PutMapping("/apply-discount")
+    public ResponseEntity<String> applyDiscount(@RequestParam String merchantID,
+                                                @RequestParam String productID,
+                                                @RequestParam double discountPercentage) {
+
+        double discountedPrice = prodectService.applyDiscount(merchantID, productID, discountPercentage);
+
+        if (discountedPrice == -1) {
+            return ResponseEntity.status(400).body("Discount cannot be applied: Either the product or merchant does not exist.");
+        }
+
+        return ResponseEntity.status(200).body("Discount applied successfully! New price: " + discountedPrice);
+    }
     }
 
    
