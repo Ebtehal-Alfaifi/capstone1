@@ -42,7 +42,8 @@ public class UserModel {
     //****** extra ent point******************
     private ArrayList<String>favoriteList;
     private ArrayList<String> purchasedProducts = new ArrayList<>(); // قائمة المنتجات التي قام المستخدم بشرائها
-    private Map<String, Integer> ratings = new HashMap<>(); // خريطة لتخزين التقييمات
+    private Map<String, Integer> ratings = new HashMap<>();// خريطة لتخزين التقييمات
+    private ArrayList<String> cart = new ArrayList<>(); /// استخدمتها عشان اضيف المنتجات في السلة
 
     public void addPurchasedProduct(String productId) {
         this.purchasedProducts.add(productId);
