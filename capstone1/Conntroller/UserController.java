@@ -65,33 +65,52 @@ private final UserService userService;
 
     //*************** extra end point********************
 
-    //1 of 5 extra end point
-    //update role
-    @PutMapping("/update-role/{userId}/{newRole}/{currentUserRole}")
-    public ResponseEntity updateRole(@PathVariable String userId, @PathVariable String newRole
-            ,@PathVariable String currentUserRole) {
-        String result = userService.updateUserRole(userId, newRole,currentUserRole);
-        if ("Role updated successfully".equals(result)) {
-            return ResponseEntity.status(200).body(new Api("Role updated successfully"));
+    
+
+
+     //2 of 5 extra end point
+    @PutMapping("/transfer-balance/{senderId}/{receiverId}/{amount}")
+    public ResponseEntity<String> transferBalance(
+            @PathVariable String senderId,
+            @PathVariable String receiverId,
+            @PathVariable double amount) {
+
+        String response = userService.transferBalance(senderId, receiverId, amount);
+
+        if (response.equals("Sender not found")
+                || response.equals("Receiver not found")
+                || response.equals("Insufficient balance")) {
+            return ResponseEntity.status(400).body(response);
+        }
+
+        return ResponseEntity.status(200).body(response);}
+
+    //3 of 5 extra end point
+    // Add product to wishlist endpoint
+    @PostMapping("/{userId}/wishlist/{productId}")
+    public ResponseEntity<String> addProductToWishlist(@PathVariable String userId,
+                                                       @PathVariable String productId) {
+        String response = userService.addProductToWishlist(userId, productId);
+
+        if (response.contains("not found") || response.contains("already")) {
+            return ResponseEntity.status(400).body(response);
         } else {
-            return ResponseEntity.status(400).body(new Api(result));
+            return ResponseEntity.status(200).body(response);
         }
     }
+    //4 of 5
+    @PostMapping("/rateProduct")
+    public ResponseEntity<String> rateProduct(@RequestParam String userId, @RequestParam String productId, @RequestParam int rating) {
+        String responseMessage = userService.rateProduct(userId, productId, rating);
 
-
-    //2 of 5 extra end point
-    //update balance
-    @PutMapping("/add-balance/{userId}/{amount}")
-    public ResponseEntity addBalance(@PathVariable String userId,
-                                     @PathVariable int amount) {
-        String result = userService.addBalance(userId, amount);
-
-        if ("Balance updated successfully".equals(result)) {
-
-            return ResponseEntity.status(200).body(new Api(result));
+        if (responseMessage.contains("successfully")) {
+            return ResponseEntity.status(HttpStatus.OK).body(responseMessage);
+        } else if (responseMessage.contains("User not found")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMessage);
+        } else if (responseMessage.contains("Rating")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
         } else {
-
-            return ResponseEntity.status(400).body(new Api(result));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseMessage);
         }
     }
 
