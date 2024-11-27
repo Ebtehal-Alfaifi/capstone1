@@ -78,24 +78,6 @@ public class StockController {
         return ResponseEntity.status(400).body(new Api("Stock or merchant not found"));
     }
 
-
-    //1 of 5 extra end point
-    @PutMapping("/apply-discount/{merchantID}/{productID}/{discountPercentage}")
-    public ResponseEntity applyDiscount(
-            @PathVariable String merchantID,
-            @PathVariable String productID,
-            @PathVariable double discountPercentage) {
-
-        double discountedPrice = stockService.applyDiscount(merchantID, productID,
-                discountPercentage);
-
-        if (discountedPrice == -1) {
-            return ResponseEntity.status(400).body("Invalid request: Merchant or Product not found" +
-                    ", or unauthorized.");
-        }
-
-        return ResponseEntity.ok("Discount applied successfully! New Price: " + discountedPrice);
-    }
 }
 
     
