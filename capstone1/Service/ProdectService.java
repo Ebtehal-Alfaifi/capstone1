@@ -89,11 +89,28 @@ public String buyProdect(String userId,String productid,String merchantID ) {
 
 //************** extra endpoint *****************
 
-      //1 of 5 extra end point
-// to use it in stock service
-    // حساب السعر بعد الخصم
-    public double calculateDiscountedPrice(double originalPrice, double discountPercentage) {
-        return originalPrice - (originalPrice * discountPercentage / 100);
+     //1 of 5 extra end point
+    public double applyDiscount(String merchantID, String productID, double discountPercentage) {
+        ProductModel product = getProductById(productID);
+        if (product == null) {
+            return -1;
+        }
+        // التحقق من أن التاجر هو المالك الصحيح للمنتج
+        StockModel stock = stockService.getStockByProductAndMerchant(merchantID, productID);
+        if (stock == null) {
+            return -1;
+        }
+
+        if (!stock.getMerchantID().equals(merchantID)) {
+            return -1;
+        }
+
+        double originalPrice = product.getPrice();
+        double discountedPrice = originalPrice - (originalPrice * discountPercentage / 100);
+
+
+        product.setPrice(discountedPrice);
+        return discountedPrice;
     }
 
 
