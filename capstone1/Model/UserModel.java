@@ -39,6 +39,16 @@ public class UserModel {
     private double balance;
 
 
+    //****** extra ent point******************
+    private ArrayList<String>favoriteList;
+    private ArrayList<String> purchasedProducts = new ArrayList<>(); // قائمة المنتجات التي قام المستخدم بشرائها
+    private Map<String, Integer> ratings = new HashMap<>(); // خريطة لتخزين التقييمات
+
+    public void addPurchasedProduct(String productId) {
+        this.purchasedProducts.add(productId);
+    }
+
+
 
 
 }
