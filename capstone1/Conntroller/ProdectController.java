@@ -77,8 +77,9 @@ if (cheecked){
         } else {
             return ResponseEntity.status(400).body(result);
         }
-
-          @PutMapping("/apply-discount")
+        
+        //1 of 5 extra end point 
+      @PutMapping("/apply-discount")
     public ResponseEntity<String> applyDiscount(@RequestParam String merchantID,
                                                 @RequestParam String productID,
                                                 @RequestParam double discountPercentage) {
