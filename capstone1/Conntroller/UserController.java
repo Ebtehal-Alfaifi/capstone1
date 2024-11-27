@@ -65,9 +65,6 @@ private final UserService userService;
 
     //*************** extra end point********************
 
-    
-
-
      //2 of 5 extra end point
     @PutMapping("/transfer-balance/{senderId}/{receiverId}/{amount}")
     public ResponseEntity<String> transferBalance(
@@ -114,7 +111,21 @@ private final UserService userService;
         }
     }
 
+    
+//5 of 5
 
+    @PostMapping("/{userId}/cart/{productId}")
+    public ResponseEntity<String> addProductToCart(@PathVariable String userId, @PathVariable String productId) {
+        String response = userService.addProductToCart(userId, productId);
+
+        if (response.contains("not found")) {
+            return ResponseEntity.status(400).body(response);
+        } else if (response.contains("already")) {
+            return ResponseEntity.status(400).body(response);
+        } else {
+            return ResponseEntity.status(200).body(response);
+        }
+    }
 
 
 
